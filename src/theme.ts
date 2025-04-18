@@ -300,6 +300,18 @@ export const theme = createTheme({
              };
         }
 
+        // Add back styles override, but only for secondary hover
+        if (props.variant === 'outline' && props.color !== 'warningRed') {
+            variantStyles.root = {
+                ...variantStyles.root,
+                '&:hover:not([data-disabled])': {
+                    backgroundColor: theme.colors.btnSecondaryBgHover[5],
+                    borderColor: theme.colors.btnSecondaryBorderHover[5],
+                    boxShadow: secondaryHoverShadow,
+                }
+            };
+        }
+
         // Combine base styles with variant-specific styles
         return {
           root: { ...baseRootStyles, ...variantStyles.root },
