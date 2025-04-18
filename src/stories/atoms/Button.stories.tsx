@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import { Button, MantineProvider } from '@mantine/core';
+import { Button, ButtonProps } from '../../atoms/Button/Button';
+import { MantineProvider } from '@mantine/core';
 import { theme } from '../../theme'; // Import the custom theme
 
 // Import icons using Vite's ?react syntax
@@ -8,7 +9,7 @@ import HeartIcon from '../../assets/icons/heart.svg?react';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg?react';
 
 const meta: Meta<typeof Button> = {
-  title: 'Atoms/Button (Styled)',
+  title: 'Atoms/Button',
   component: Button,
   decorators: [
     (Story) => (
@@ -23,33 +24,29 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     children: { control: 'text' },
     disabled: { control: 'boolean' },
-    variant: {
+    designVariant: {
         control: { type: 'select' },
-        options: ['filled', 'outline', 'subtle'], // Reflect variants we styled
+        options: ['primary', 'secondary', 'secondary-warning', 'secondary-table'],
     },
-    color: {
-        control: { type: 'select' },
-        options: ['dark', 'gray', 'warningRed'], // Reflect colors used
-    },
-    size: { table: { disable: true } }, // Keep disabled as we only styled specific sizes implicitly
+    size: { table: { disable: true } },
     leftSection: { table: { disable: true } },
     rightSection: { table: { disable: true } },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<ButtonProps>;
 
 // Base render function (optional, can often just use args directly)
 const BaseButtonStory: React.FC<React.ComponentProps<typeof Button>> = (args) => (
     <Button {...args} />
 );
 
-// --- Primary Button Stories (Using variant="filled") ---
+// --- Primary Button Stories (Using designVariant="primary") ---
 
 export const PrimaryDefault: Story = {
   args: {
-    variant: 'filled',
+    designVariant: 'primary',
     children: 'Primary Button',
     disabled: false,
     leftSection: <HeartIcon width={16} height={16} />,
@@ -68,20 +65,18 @@ export const PrimaryHover: Story = {
 
 export const PrimaryDisabled: Story = {
     args: {
-      variant: 'filled',
+      ...PrimaryDefault.args,
       children: 'Primary Disabled',
       disabled: true,
-      leftSection: <HeartIcon width={16} height={16} />,
-      rightSection: <HeartIcon width={16} height={16} />,
     },
 };
 
 
-// --- Secondary Button Stories (Using variant="outline") ---
+// --- Secondary Button Stories (Using designVariant="secondary") ---
 
 export const SecondaryDefault: Story = {
   args: {
-    variant: 'outline',
+    designVariant: 'secondary',
     children: 'Secondary Button',
     disabled: false,
     leftSection: <HeartIcon width={16} height={16} />,
@@ -94,36 +89,34 @@ export const SecondaryHover: Story = {
     ...SecondaryDefault.args,
     children: 'Secondary Hover',
   },
-  parameters: { pseudo: { hover: true } },
+  // Remove pseudo state parameter as it seems unreliable here
+  // parameters: { pseudo: { hover: true } },
 };
 
 export const SecondaryDisabled: Story = {
   args: {
-    variant: 'outline',
+    ...SecondaryDefault.args,
     children: 'Secondary Disabled',
     disabled: true,
-    leftSection: <HeartIcon width={16} height={16} />,
-    rightSection: <HeartIcon width={16} height={16} />,
   },
 };
 
-// --- Secondary Warning Button Story (Using variant="outline" color="warningRed") ---
+// --- Secondary Warning Button Story (Using designVariant="secondary-warning") ---
 
 export const SecondaryWarningDefault: Story = {
     args: {
-      variant: 'outline',
-      color: 'warningRed',
+      designVariant: 'secondary-warning',
       children: 'Warning Button',
       disabled: false,
       leftSection: <HeartIcon width={16} height={16} />,
     },
   };
 
-// --- Secondary Table Button Story (Using variant="subtle") ---
+// --- Secondary Table Button Story (Using designVariant="secondary-table") ---
 
 export const SecondaryTableDefault: Story = {
     args: {
-      variant: 'subtle',
+      designVariant: 'secondary-table',
       children: 'Table Action',
       disabled: false,
       rightSection: <ArrowRightIcon width={12} height={12} />,
