@@ -121,7 +121,7 @@ export const Button: React.FC<ButtonProps> = ({ designVariant = 'primary', child
          variantStyles = {
              root: {
                  ...(isDisabled ? disabledOutlineStyles : defaultOutlineStyles),
-                 '&:hover:not([data-disabled])': hoverOutlineStyles,
+                 '&:hover:not([data-disabled])&:hover:not([data-disabled])': hoverOutlineStyles,
              },
              section: {
                  color: isDisabled ? disabledIcon : defaultIcon,
